@@ -1,4 +1,3 @@
-var XML = require('pixl-xml');
 // We recommend writing your creates separate like this and rolling them
 // into the App definition at the end.
 module.exports = {
@@ -54,7 +53,7 @@ module.exports = {
         }
       });
 
-      return promise.then((response) => XML.parse(response.content));
+      return promise.then((response) => response.content);
     },
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

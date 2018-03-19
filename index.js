@@ -1,5 +1,5 @@
 const prospect = require('./creates/prospect');
-
+const xml = require('pixl-xml');
 // Now we can roll up all our behaviors in an App.
 const App = {
   // This is just shorthand to reference the installed dependencies you have. Zapier will
@@ -11,6 +11,10 @@ const App = {
   ],
 
   afterResponse: [
+    (response, z, bundle) => {
+      response.xml = xml.parse(response.content);
+      return response;
+    }
   ],
 
   resources: {

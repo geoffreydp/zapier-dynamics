@@ -1,13 +1,11 @@
 require('should');
-var XML = require('pixl-xml');
-const xml_returnstring = '<s:Envelope' +
-' xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">' +
-'<s:Body><RegistrarProspectoResponse xmlns="http://tempuri.org/">' +
-'<RegistrarProspectoResult>&lt;ParametrosOutput&gt;&lt;Respuesta&gt;&lt;' +
-'IndicadorExito&gt;S&lt;/IndicadorExito&gt;&lt;DescripcionError&gt;&lt;' +
-'/DescripcionError&gt;&lt;/Respuesta&gt;&lt;/ParametrosOutput&gt;' +
-'</RegistrarProspectoResult></RegistrarProspectoResponse></s:Body></s:Envelope>';
 const zapier = require('zapier-platform-core');
+const xml_result = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">'+
+            '<s:Body><RegistrarProspectoResponse xmlns="http://tempuri.org/">' +
+            '<RegistrarProspectoResult>&lt;ParametrosOutput&gt;&lt;Respuesta&gt;' +
+            '&lt;IndicadorExito&gt;S&lt;/IndicadorExito&gt;&lt;DescripcionError&gt;' +
+            '&lt;/DescripcionError&gt;&lt;/Respuesta&gt;&lt;/ParametrosOutput&gt;' +
+            '</RegistrarProspectoResult></RegistrarProspectoResponse></s:Body></s:Envelope>';
 
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
@@ -36,8 +34,13 @@ describe('creates', () => {
           };*/
 
       appTester(App.creates.prospect.operation.perform, bundle)
+      /*  .then((result) => {
+          result.should.have.property();
+          done();
+        }) */
         .then((result) => {
-          result.should.have.property(XML.parse(xml_returnstring));
+          //response.xml = xml.parse(result.content);
+          result.should.eql(xml_result);
           done();
         })
         .catch(done);
